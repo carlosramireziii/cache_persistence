@@ -6,18 +6,12 @@ module CachePersistence
     def self.included(base)
       base.extend ClassMethods
       base.class_eval do
+        include ActiveModel::Model
+
         attr_reader :id
 
-        def ==(other)
-          id == other.id if other.respond_to?(:id)
-        end
-
-        def to_param
-          id.to_s
-        end
-
         def persisted?
-          id.present?
+          id
         end
       end
     end
