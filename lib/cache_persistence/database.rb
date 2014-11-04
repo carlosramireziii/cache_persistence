@@ -4,7 +4,7 @@ module CachePersistence
   class Database
 
     def initialize(klass)
-      @cache_key = "#{klass.to_s}/all"
+      @cache_key = "#{Rails.env.to_s}/#{klass.to_s}/all"
     end
 
     def fetch(id)
