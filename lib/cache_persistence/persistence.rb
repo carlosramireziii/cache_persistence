@@ -11,7 +11,11 @@ module CachePersistence
         attr_reader :id
 
         def persisted?
-          id
+          id.present?
+        end
+
+        def ==(other)
+          id == other.id
         end
       end
     end
