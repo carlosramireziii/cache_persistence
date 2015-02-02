@@ -26,7 +26,11 @@ module CachePersistence
       @id ||= database.next_id
       database.commit(self.id, self)
     end
-    alias_method :save!, :save
+
+    def save!
+      persisted = save
+      raise Errors::RecordInvalid unless persisted
+    end
 
     def update(params)
       return unless valid?
@@ -40,10 +44,6 @@ module CachePersistence
     def destroy
       database = Database.new(self.class.to_s)
       database.commit(self.id, nil)
-    end
-
-    def valid?
-      true
     end
 
     module ClassMethods
@@ -72,6 +72,10 @@ module CachePersistence
 
       def create(attrs = {})
         self.new(attrs).tap { |r| r.save }
+      end
+
+      def create!(attrs = {})
+        self.new(attrs).tap { |r| r.save! }
       end
     end
   end

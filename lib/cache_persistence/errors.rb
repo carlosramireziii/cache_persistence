@@ -1,5 +1,6 @@
 module CachePersistence
   module Errors
-    class RecordNotFound < StandardError; end
+    RecordNotFound = Class.new(StandardError)
+    RecordInvalid = Class.new(StandardError)
   end
 end
