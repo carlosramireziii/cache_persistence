@@ -5,7 +5,6 @@ module CachePersistence
     end
 
     module ClassMethods
-
       def where(attrs = {})
         records = self.all
         attrs.each do |name, value|
@@ -30,6 +29,9 @@ module CachePersistence
         self.all.last
       end
 
+      def exists?(attrs = {})
+        !where(attrs).empty?
+      end
     end
   end
 end
